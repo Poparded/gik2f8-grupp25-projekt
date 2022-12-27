@@ -4,31 +4,58 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <title>cpgruppen25</title>
 </head>
 <body>
+
 <form id ="ForumSite">
+    <section>
+    <label for="date"> Datum</label>
+
+    <p class="message text-sm text-red-700 mb-2 hidden">
+        Error message
+      </p>
 <input type="date"
 id="createdDate"
 name="createdDate" />
 
+</section>
+ <section>
 <label class="block pr-5 mb-2 text-xl"
- for="Username">Användarnamn</label>
+ for="username">Användarnamn</label>
+ <p class="message text-sm text-red-700 mb-2 hidden">
+    Error message
+  </p>
 <input type="text"
-id = "Username"
-name="Username"
+id = "username"
+name="username"
 >
+
+</section>
+<section>
 <label for="Post">Forum-inlägg</label>
+<p class="message text-sm text-red-700 mb-2 hidden">
+    Error message
+  </p>
 <textarea maxlength="800" id="forumPost"
 name = "forumPost"
 cols="30" rows="10"></textarea>
 
 
+
+</section>
+<section>
+<label for="Image"></label>
 <input type="file"
 id="fileImage"
 name="fileImage"
 accept="image/png, image/jpeg , image/webp"/>
-
+<p class="message text-sm text-red-700 mb-2 hidden">
+    Error message
+  </p>
+</section>
 <button name="submitForumPost"
 type="submit">
 Spara
