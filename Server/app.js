@@ -5,7 +5,7 @@ const express = require('express')
 const app = express();
 
 const fs = require("fs/promises");
-const PORT = 5000;
+const PORT = 4000;
 
 app
     /* Man kan ange format etc. på de data som servern ska kunna ta emot och skicka. Metoderna json och urlencoded är inbyggda hos express */
@@ -25,10 +25,10 @@ app
 
 
 
-app.get('/tasks', async (req, res) => {
+app.get('/posts', async (req, res) => {
 
     try {
-        const task = await fs.readFile('./task.json');
+        const task = await fs.readFile('./posts.json');
         res.send(JSON.parse(tasks))
     } catch (error) {
         res.status(500).send({ error });
@@ -40,10 +40,10 @@ app.get('/tasks', async (req, res) => {
 
 );
 
-app.post("/tasks", async (req, res) => {
+app.post("/posts", async (req, res) => {
     try {
         const task = req.body;
-        const listBuffer = await fs.readFile('./tasks.json');
+        const listBuffer = await fs.readFile('./posts.json');
         /* Innehållet i filen är de uppgifter som hittills är sparade. För att kunna behandla listan av uppgifter i filen som JavaScript-objekt behövs JSON.parse. Parse används för att översätta en buffer eller text till JavaScript */
         const currentTasks = JSON.parse(listBuffer);
         /* Skapar en variabel för att kunna sätta id på den nya uppgiften */
@@ -74,4 +74,8 @@ app.post("/tasks", async (req, res) => {
         res.status(500).send({ error: error.stack });
     }
 });
+
+
+app.listen(PORT, () => console.log('Server running on http://localhost:4000'));
+
 

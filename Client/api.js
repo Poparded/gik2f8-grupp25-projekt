@@ -1,43 +1,39 @@
+"use strict"
+
+
 class Api {
-    url = "";
+    url = '';
 
     constructor(url) {
-        this.url;
+        this.url = url;
     }
 
     create(data) {
-        const JSONDatabase = JSON.stringify(data);
-        console.log('sending ${JSONData} to ${this.url}`);'
-
-        )
-    }
-
-}
+        const JSONData = JSON.stringify(data);
+        console.log('sending ${JSONData} to ${this.url}`);')
 
 
-
-async function sendRequest() {
-    try {
-        const request = new Request(this.url, {
-            method: "POST",
+        const request = new request(this.url, {
+            method: "Post",
             body: JSONData,
-            headers: {
-                'content-type': 'application/json'
-            },
-            credentials: 'include',
-            mode: 'cors',
+            Headers: {
+                "content-type": "application/json"
+            }
         });
-        const response = await fetch(request);
-        if (response.ok) {
-            const data = await response.json();
-            // handle success
-        } else {
-            // handle error
-        }
-    } catch (error) {
-        // handle error
+
+
+
+        fetch(request).then(result)
     }
+
+
+
+
+
+
 }
+
+
 
 
 

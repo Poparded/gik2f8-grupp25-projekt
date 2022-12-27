@@ -1,4 +1,3 @@
-const api = new Api("http://localhost:5000/tasks")
 ForumSite.createdDate.addEventListener('input', (e) => validateField(e.target));
 ForumSite.createdDate.addEventListener('blur', (e) => validateField(e.target));
 
@@ -17,6 +16,7 @@ let CreatedDateValid = true;
 let usernameValid = true
 let ForumPostValid = true;
 let ImageValid = true;
+const api = new Api('http://localhost:4000/posts');
 
 
 function validateField(field) {
@@ -113,7 +113,7 @@ function saveTask() {
 
 
     }
-    Api.create(task)
+    api.create(task)
 
 
 
