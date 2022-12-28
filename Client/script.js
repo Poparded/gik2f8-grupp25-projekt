@@ -16,15 +16,16 @@ let CreatedDateValid = true;
 let usernameValid = true
 let ForumPostValid = true;
 let ImageValid = true;
-const api = new Api('http://localhost:5000/tasks');
+const api = new Api('http://localhost:4000/posts');
 
 
 function validateField(field) {
     const { name, value } = field;
+    console.log(field);
     let = validationMessage = "";
     switch (name) {
         case "createdDate": {
-            if (value === 0) {
+            if (value === "") {
                 CreatedDateValid = false;
                 validationMessage = "Du måste specifera ett datum.";
             }
@@ -52,21 +53,20 @@ function validateField(field) {
 
         case 'ForumPost': {
             /* Liknande enkla validering som hos title */
-            if (value.length === 0) {
-                ForumPost = false;
-                validationMessage =
-                    "Fältet 'Beskrvining' får inte innehålla mer än 500 tecken.";
+            if (value.length > 500) {
+                ForumPostValid = false;
+
+                validationMessage = "Fältet 'Beskrvining' får inte innehålla mer än 500 tecken.";
             }
-            else if (value.length > 100) {
-                ForumPost = false;
-                validationMessage =
-                    "Du måste ha en beskrivning";
+            else if (value.length === 0) {
+                ForumPostValid = false;
+                validationMessage = "Du måste specifiera ett datum :(((((((((((( .";
+
             }
             else {
-                ForumPost = true;
+                ForumPostValid = true;
             }
             break;
-
         }
         case "fileImage": {
             if (value.length === 0) {
@@ -90,19 +90,18 @@ function validateField(field) {
 
 }
 
+
 function onSubmit(e) {
     e.preventDefault();
-
     if (CreatedDateValid && usernameValid && ForumPostValid && ImageValid) {
-        console.log("Submit");
+        console.log('Submit');
 
         saveTask();
-
     }
-
-
-
 }
+
+
+
 
 function saveTask() {
     const task = {
@@ -112,19 +111,18 @@ function saveTask() {
         image: ForumSite.fileImage.value
 
 
-    }
-    api.create(task)
+    };
+    api.create(task).then((task) => {
+        /* Task kommer här vara innehållet i promiset. Om vi ska följa objektet hela vägen kommer vi behöva gå hela vägen till servern. Det är nämligen det som skickas med res.send i server/api.js, som api-klassens create-metod tar emot med then, översätter till JSON, översätter igen till ett JavaScript-objekt, och till sist returnerar som ett promise. Nu har äntligen det promiset fångats upp och dess innehåll - uppgiften från backend - finns tillgängligt och har fått namnet "task".  */
+        if (task) {
+            console.log("Success");
+        }
+
+    });
 
 
 
 
-    createdDate.value = '';
-    username.value = '';
-    forumPost.value = "";
-    fileImage.value = '';
-    createdDateValid = false;
-    usernameValid = false;
-    forumPostValid = false;
-    imagePostValid = false;
+
 
 }

@@ -1,75 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
 
     <title>cpgruppen25</title>
-</head>
-<body>
-  <main>
+  </head>
+  <body>
+    <main>
+      <form id="ForumSite">
+        <section class="bg-amber-600">
+          <label for="date"> Datum</label>
 
-<form id ="ForumSite">
-    <section>
-    <label for="date"> Datum</label>
+          <p class="message text-sm text-red-700 mb-2 hidden">Error message</p>
+          <input
+            class="form-input rounded-md shadow-sm"
+            type="date"
+            id="createdDate"
+            name="createdDate"
+          />
+        </section>
+        <section class="bg-yellow-700 c">
+          <label class="block pr-5 mb-2 text-xl" for="username"
+            >Användarnamn</label
+          >
+          <p class="message text-sm text-red-700 mb-2 hidden">Error message</p>
+          <input
+            class="form-input rounded-md shadow-sm"
+            type="text"
+            id="username"
+            name="username"
+          />
+        </section>
+        <section class="mb-2">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="forumInlägg"
+            >Forum-inlägg</label
+          >
+          <p class="message text-sm text-red-700 mb-2 hidden">Error message</p>
+          <textarea
+            maxlength="500"
+            rows="5"
+            id="forumPost"
+            name="forumPost"
+            class="resize-none w-full rounded-md border-yellow-500 border-2 focus-within:outline-none focus:border-yellow-600 px-4 py-2"
+          ></textarea>
+        </section>
 
-    <p class="message text-sm text-red-700 mb-2 hidden">
-        Error message
-      </p>
-<input type="date"
-id="createdDate"
-name="createdDate" />
+        <section class="bg-emerald-200">
+          <label for="Image"></label>
+          <input
+            type="file"
+            id="fileImage"
+            name="fileImage"
+            accept="image/png, image/jpeg , image/webp"
+          />
+          <p class="message text-sm text-red-700 mb-2 hidden">Error message</p>
+        </section>
+        <button
+          name="submitForumPost"
+          class="btn-blue-500 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
 
-</section>
- <section>
-<label class="block pr-5 mb-2 text-xl"
- for="username">Användarnamn</label>
- <p class="message text-sm text-red-700 mb-2 hidden">
-    Error message
-  </p>
-<input type="text"
-id = "username"
-name="username"
->
-
-</section>
-<section>
-<label for="Post">Forum-inlägg</label>
-<p class="message text-sm text-red-700 mb-2 hidden">
-    Error message
-  </p>
-<textarea maxlength="800" id="forumPost"
-name = "forumPost"
-cols="30" rows="10"></textarea>
-
-
-
-</section>
-<section>
-<label for="Image"></label>
-<input type="file"
-id="fileImage"
-name="fileImage"
-accept="image/png, image/jpeg , image/webp"/>
-<p class="message text-sm text-red-700 mb-2 hidden">
-    Error message
-  </p>
-</section>
-<button name="submitForumPost"
-type="submit">
-Spara
-</button>
-
-</form> 
-</main>
-<script src="Api.js"></script>
-
-<script src="script.js"></script>
-</body>
-
-
-
+          type="submit"
+        >
+          Spara
+        </button>
+      </form>
+      <script src="Api.js"></script>
+      <script src="script.js"></script>
+    </main>
+  </body>
 </html>
-    

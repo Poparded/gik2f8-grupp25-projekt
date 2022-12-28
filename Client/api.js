@@ -10,24 +10,28 @@ class Api {
 
     create(data) {
         const JSONData = JSON.stringify(data);
-        console.log('sending ${JSONData} to ${this.url}`);')
+        console.log(`sending ${JSONData} to ${this.url}`);
 
 
-        const request = new request(this.url, {
-            method: "Post",
+        const request = new Request(this.url, {
+            method: "POST",
             body: JSONData,
             Headers: {
                 "content-type": "application/json"
             }
         });
 
+        console.log(request);
 
 
-        fetch(request).then(result)
+        return (
+            fetch(request).then((result) => result.json())
+                .then((data) => data)
+                .catch((err) => console.log(err))
+
+        )
+
     }
-
-
-
 
 
 

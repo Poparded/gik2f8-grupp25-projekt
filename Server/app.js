@@ -25,20 +25,6 @@ app
 
 
 
-app.get('/posts', async (req, res) => {
-
-    try {
-        const task = await fs.readFile('./posts.json');
-        res.send(JSON.parse(tasks))
-    } catch (error) {
-        res.status(500).send({ error });
-    }
-
-}
-    //ding dong
-
-
-);
 
 app.post("/posts", async (req, res) => {
     try {
@@ -46,6 +32,7 @@ app.post("/posts", async (req, res) => {
         const listBuffer = await fs.readFile('./posts.json');
         /* Innehållet i filen är de uppgifter som hittills är sparade. För att kunna behandla listan av uppgifter i filen som JavaScript-objekt behövs JSON.parse. Parse används för att översätta en buffer eller text till JavaScript */
         const currentTasks = JSON.parse(listBuffer);
+
         /* Skapar en variabel för att kunna sätta id på den nya uppgiften */
         let maxTaskId = 1;
         /* Om det finns några uppgifter sedan tidigare, dvs. currentTasks existerar och är en lista med en längd större än 0 ska ett nytt id räknas ut baserat på de som redan finns i filen */
@@ -66,7 +53,7 @@ app.post("/posts", async (req, res) => {
         const newList = currentTasks ? [...currentTasks, newTask] : [newTask];
 
         /* Den nya listan görs om till en textsträng med hjälp av JSON.stringify och sparas ner till filen tasks.json med hjälp av fs-modulens writeFile-metod. Anropet är asynkront så await används för att invänta svaret innan koden går vidare. */
-        await fs.writeFile('./tasks.json', JSON.stringify(newList));
+        await fs.writeFile('./posts.json', JSON.stringify(newList));
         /* Det är vanligt att man vid skapande av någon ny resurs returnerar tillbaka den nya sak som skapades. Så den nya uppgiften skickas med som ett success-response. */
         res.send(newTask);
     } catch (error) {
