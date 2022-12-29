@@ -148,26 +148,31 @@ function renderList() {
 
 
   api.getAll().then((forumPosts) => {
-    console.log(tasks);
     forumPosts.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
 
-    forumPosts.forEach(item => forumSiteElement.insertAdjacentHTML("beforeend", renderFormPosts(item)));
+    forumPosts.forEach(item => forumSiteElement.insertAdjacentHTML("afterend", renderFormPosts(item)));
   });
 }
 
 function renderFormPosts({ createdDate, username, forumPost, fileImage }) {
-  let html = '
-    <li>
-
-
-
-
-
-
-      (html += ``);
-
-  html += `
-    </li>`;
+let html = `
+  
+  <div class="bg-white rounded-lg shadow-lg p-3">
+  <div class="flex justify-between items-center mb-2">
+    <div class="text-xs text-gray-600">${createdDate}</div>
+    <div class="text-xs font-bold text-gray-800">${username}</div>
+  </div>
+  <div class="mb-2">
+    <p class="text-base font-serif text-gray-800">${forumPost}</p>
+  </div>
+  <div>
+    <img class="h-10 w-full object-cover" src="${fileImage}" alt="Attached image">
+  </div>
+</div>
+    
+`
+  
+    
 
   return html;
 

@@ -81,4 +81,76 @@
       <script src="script.js"></script>
     </main>
   </body>
+  <footer>
+    <div id="toolbar">
+      <div class="letter letter-a">C</div>
+      <div class="letter letter-m">P</div>
+      <div class="letter letter-n">G</div>
+    </div>
+    
+    <style>
+      #toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        height: 60px;
+        background-color: #333;
+        color: #fff;
+      }
+    
+      .letter {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+    
+      .letter-a {
+        animation: wave-a 2s ease-in-out infinite;
+      }
+    
+      .letter-m {
+        animation: wave-m 2s ease-in-out infinite;
+      }
+    
+      .letter-n {
+        animation: wave-n 2s ease-in-out infinite;
+      }
+    
+      @keyframes wave-a {
+        0% { transform: translateY(0); }
+        10% { transform: translateY(-10px); }
+        20% { transform: translateY(0); }
+        30% { transform: translateY(-5px); }
+        40% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+        60% { transform: translateY(0); }
+        70% { transform: translateY(-5px); }
+        80% { transform: translateY(0); }
+        90% { transform: translateY(-10px); }
+        100% { transform: translateY(0); }
+      }
+    
+      @keyframes wave-m {
+        0% { transform: translateY(0); }
+        15% { transform: translateY(-10px); }
+        30% { transform: translateY(0); }
+        45% { transform: translateY(-5px); }
+        60% { transform: translateY(0); }
+        75% { transform: translateY(-10px); }
+        90% { transform: translateY(0); }
+        100% { transform: translateY(-5px); }
+      }
+    
+      @keyframes wave-n {
+        0% { transform: translateY(0); }
+        20% { transform: translateY(-10px); }
+        40% { transform: translateY(0); }
+        60% { transform: translateY(-5px); }
+        80% { transform: translateY(0); }
+        100% { transform: translateY(-10px); }
+      }
+    </style>
+    
+    
+  </footer>
 </html>

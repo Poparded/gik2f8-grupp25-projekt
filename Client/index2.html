@@ -7,11 +7,19 @@
     <title>Document</title>
 </head>
 <body>
-<li>
- 
 
-
-</li> 
-    
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="flex justify-between items-center mb-2">
+          <div class="text-xs text-gray-600">${createdDate}</div>
+          <div class="text-xs font-bold text-gray-800">${username}</div>
+        </div>
+        <div class="mb-4">
+          <p class="text-base font-serif text-gray-800">${forumPost}</p>
+        </div>
+        <div>
+          <img class="h-32 w-full object-cover" src="${fileImage}" alt="Attached image">
+        </div>
+      </div>
+          
 </body>
 </html>
