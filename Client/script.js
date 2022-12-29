@@ -148,14 +148,17 @@ function renderList() {
 
 
   api.getAll().then((forumPosts) => {
+    forumSiteElement.innerHTML = '';
     forumPosts.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
-
-    forumPosts.forEach(item => forumSiteElement.insertAdjacentHTML("afterend", renderFormPosts(item)));
+    console.log(forumPosts);
+    forumPosts.forEach(formPost => forumSiteElement.insertAdjacentHTML("afterend", renderFormPosts(formPost)));
   });
+
+
 }
 
 function renderFormPosts({ createdDate, username, forumPost, fileImage }) {
-let html = `
+  let html = `
   
   <div class="bg-white rounded-lg shadow-lg p-3">
   <div class="flex justify-between items-center mb-2">
@@ -171,8 +174,8 @@ let html = `
 </div>
     
 `
-  
-    
+
+
 
   return html;
 
