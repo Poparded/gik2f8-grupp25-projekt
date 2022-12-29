@@ -6,38 +6,44 @@ ForumSite.username.addEventListener('input', (e) => validateField(e.target));
 ForumSite.username.addEventListener('blur', (e) => validateField(e.target));
 
 
+ForumSite.forumPost.addEventListener('input', (e) => validateField(e.target));
+ForumSite.forumPost.addEventListener('blur', (e) => validateField(e.target));
+
+
+
 ForumSite.fileImage.addEventListener('input', (e) => validateField(e.target));
 ForumSite.fileImage.addEventListener('blur', (e) => validateField(e.target));
 
 ForumSite.addEventListener('submit', onSubmit);
 
 
-let CreatedDateValid = true;
+let createdDateValid = true;
 let usernameValid = true
-let ForumPostValid = true;
-let ImageValid = true;
+let forumPostValid = true;
+let imageValid = true;
 const api = new Api('http://localhost:5000/tasks');
-
+const forumSiteElement = document.getElementById("root");
 
 function validateField(field) {
   const { name, value } = field;
-  console.log(field);
+  console.log(name);
+
   let = validationMessage = "";
   switch (name) {
     case "createdDate": {
       if (value === "") {
-        CreatedDateValid = false;
+        createdDateValid = false;
         validationMessage = "Du måste specifera ett datum.";
       }
       else {
-        CreatedDateValid = true;
+        createdDateValid = true;
       }
       break;
     }
     case "username": {
 
       if (value.length < 5) {
-        CreatedDateValid = false;
+        usernameValid = false;
         validationMessage = "Ditt Användernamn måste vara större än 5 tecken";
       }
 
@@ -51,31 +57,33 @@ function validateField(field) {
 
 
 
-    case 'ForumPost': {
+    case 'forumPost': {
       /* Liknande enkla validering som hos title */
       if (value.length > 500) {
-        ForumPostValid = false;
+        forumPostValid = false;
 
-        validationMessage = "Fältet 'Beskrvining' får inte innehålla mer än 500 tecken.";
+        validationMessage = "Fältet 'forumPost' får inte innehålla mer än 500 tecken.";
       }
       else if (value.length === 0) {
-        ForumPostValid = false;
-        validationMessage = "Du måste specifiera ett datum :(((((((((((( .";
+        forumPostValid = false;
+        validationMessage = "Lämna inte fältet forum-post tomt!";
 
       }
       else {
-        ForumPostValid = true;
+        forumPostValid = true;
+        console.log(value.length);
+
       }
       break;
     }
     case "fileImage": {
       if (value.length === 0) {
-        ImageValid = false;
+        imageValid = false;
         validationMessage =
           "Fältet 'image' kan inte var tom";
       }
       else {
-        ImageValid = true;
+        imageValid = true;
 
       }
 
@@ -93,17 +101,14 @@ function validateField(field) {
 
 function onSubmit(e) {
   e.preventDefault();
-  console.log(e);
-  if (e.defaultPrevented) {
-    validate()
-  }
+  if (createdDateValid && usernameValid && forumPostValid && imageValid)
 
+    saveTask();
 }
-function validate() {
-  console.log('Submit');
 
-  saveTask();
-}
+
+
+
 
 
 
@@ -113,7 +118,7 @@ function saveTask() {
   const task = {
     createdDate: ForumSite.createdDate.value,
     username: ForumSite.username.value,
-    ForumPost: ForumSite.forumPost.value,
+    forumPost: ForumSite.forumPost.value,
     image: ForumSite.fileImage.value
 
 
@@ -121,15 +126,52 @@ function saveTask() {
   api.create(task).then((task) => {
     /* Task kommer här vara innehållet i promiset. Om vi ska följa objektet hela vägen kommer vi behöva gå hela vägen till servern. Det är nämligen det som skickas med res.send i server/api.js, som api-klassens create-metod tar emot med then, översätter till JSON, översätter igen till ett JavaScript-objekt, och till sist returnerar som ett promise. Nu har äntligen det promiset fångats upp och dess innehåll - uppgiften från backend - finns tillgängligt och har fått namnet "task".  */
     if (task) {
-      console.log(task);
-      console.log("Success");
+      renderList()
     }
-
+    /*createdDate.value = null;
+    username.value = null
+    forumPost.value = null;
+    imageValid.value = null;
+    CreatedDateValid = true;
+    usernameValid = true
+    ForumPostValid = true;
+    ImageValid = true;*/
   });
 
+}
+
+
+
+function renderList() {
+  console.log('rendering');
+
+
+
+  api.getAll().then((forumPosts) => {
+    console.log(tasks);
+    forumPosts.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+
+    forumPosts.forEach(item => forumSiteElement.insertAdjacentHTML("beforeend", renderFormPosts(item)));
+  });
+}
+
+function renderFormPosts({ createdDate, username, forumPost, fileImage }) {
+  let html = '
+    <li>
 
 
 
 
+
+
+      (html += ``);
+
+  html += `
+    </li>`;
+
+  return html;
 
 }
+
+
+renderList();

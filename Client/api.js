@@ -4,18 +4,20 @@ Om ni vill starta precis denna kod måste ni först installera om node-paket och
 
 Gör då följande här i VS Code: 
 1. Öppna en terminal
-2. Skriv "cd 02-todo/server" (utan citattecken) och sedan enter
+2. Skriv "cd 02-todo/server" (ut  an citattecken) och sedan enter
 3. Skriv "npm install" (utan citattecken) och sedan enter
 3. Skriv "node app.js" (utan citattecken) och enter. 
 
 Om servern startats korrekt syns nu texten "Server running on http://localhost:5000".
 
 */
-"use strict"
+"use strict";
+
+
 /* För att skapa en klass används nyckelordet class följt av klassens namn. Klasser bör ha stor inledande bokstav och döpas enligt det som kallas PascalCase. Inga parenteser används vid skapande av en klass. */
 class Api {
   /* Medlemsvariabel url, för att lagra en grund-url till servern. */
-  url = '';
+  url = "";
 
   /* När en instans av klassen skapas skickas url in som parametern */
   constructor(url) {
@@ -49,11 +51,11 @@ class Api {
       
     */
     const request = new Request(this.url, {
-      method: 'POST',
+      method: "POST",
       body: JSONData,
       headers: {
-        'content-type': 'application/json'
-      }
+        "content-type": "application/json",
+      },
     });
 
     /* JavaScripts inbyggda funktion fetch är det som används för att göra HTTP-anrop. Fetch tar ett requestobjekt som parameter. Här skickar vi in det requestobjekt som vi skapade direkt ovanför.  */
@@ -71,5 +73,9 @@ class Api {
     );
   }
 
-
+  getAll() {
+    return fetch(this.url)
+      .then((result) => result.json())
+      .catch((err) => console.log(err));
+  }
 }
