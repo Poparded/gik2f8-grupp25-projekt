@@ -1,11 +1,11 @@
 /* Importrerar nodemodulen express (installerad med npm), som är ett utbrett verktyg för att skapa och arbeta med webbservrar och hantera HTTP-förfrågningar i ett nodejs-backend. */
-"use strict"
-const express = require('express');
+"use strict";
+const express = require("express");
 /* Skapar upp ett express-objekt, som i stort representerar en webbserver */
 const app = express();
 
 /* Importerar den inbyggda modulen fs */
-const fs = require('fs/promises');
+const fs = require("fs/promises");
 
 const PORT = 5000;
 /* Expressobjektet, kallat app, har metoden "use" som används för att sätta inställningar hos vår server */
@@ -16,9 +16,9 @@ app
   /* Man kan också ange vad som ska hända övergripande med samtliga förfrågningar. Alla förfrågningar kommer att gå genom nedanstående kod först, innan den behandlas vidare. */
   .use((req, res, next) => {
     /* Det vill säga, alla response-objekt kommer att få nedanstående headers. */
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', '*');
-    res.header('Access-Control-Allow-Methods', '*');
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
+    res.header("Access-Control-Allow-Methods", "*");
     /* För att göra så att servern ska kunna behandla förfrågan vidare, använder man funktionen next() som kommer som tredje parameter till denna callbackfunktion.  */
     next();
   });
@@ -31,11 +31,11 @@ app
   Notera att route-namnen döps om i lektion 6. De ska heta tasks, inte task, men felet är enligt videorna inte tillrättat i detta skede, så jag lämnar kvar det. 
 
   2. En callbackfunktion som kommer att köras när en sådan förfrågan görs. Callbackfunktionen tar (minst) två parametrar - ett requestobjekt och ett responseobjekt, som här kallas req och res. Callbackfunktionen är asynkron för att vi använder await inuti. */
-app.get('/tasks', async (req, res) => {
+app.get("/tasks", async (req, res) => {
   /* För enkel felhantering används try/catch */
   try {
     /* Node har en inbyggd modul som heter fs (importerades i början av denna fil). Den används här för att försöka läsa innehållet i en fil vid namn tasks.json. Anropet är asynkront så man sätter await innan (och async innan callbackfunktionen i app.get().) */
-    const tasks = await fs.readFile('./tasks.json');
+    const tasks = await fs.readFile("./tasks.json");
     /* Innehållet skickas tillbaka till klienten i ett standardresponse. Eftersom allt gick bra kan vi använda defaultinställningarna med statuskod 200 och statustext "ok". Vi kan kalla detta för ett success-response. Efter res.send är förfrågan färdigbehandlad och kopplingen mot servern kommer att stängas ned. */
     res.send(JSON.parse(tasks));
   } catch (error) {
@@ -44,12 +44,12 @@ app.get('/tasks', async (req, res) => {
   }
 });
 /* Express metod för att lyssna efter POST-anrop heter naturligt post(). I övrigt fungerar den likadant som  get */
-app.post('/tasks', async (req, res) => {
+app.post("/tasks", async (req, res) => {
   try {
     /* Alla data från klienten finns i req-objektet. I req.body finns alla data, alltså själva innehållet i förfrågan. I detta fall den uppgift som ska sparas ned. */
     const task = req.body;
     /* Det befintliga innehållet i filen läses in och sparas till variabeln listBuffer. */
-    const listBuffer = await fs.readFile('./tasks.json');
+    const listBuffer = await fs.readFile("./tasks.json");
     /* Innehållet i filen är de uppgifter som hittills är sparade. För att kunna behandla listan av uppgifter i filen som JavaScript-objekt behövs JSON.parse. Parse används för att översätta en buffer eller text till JavaScript */
     const currentTasks = JSON.parse(listBuffer);
     /* Skapar en variabel för att kunna sätta id på den nya uppgiften */
@@ -72,7 +72,7 @@ app.post('/tasks', async (req, res) => {
     const newList = currentTasks ? [...currentTasks, newTask] : [newTask];
 
     /* Den nya listan görs om till en textsträng med hjälp av JSON.stringify och sparas ner till filen tasks.json med hjälp av fs-modulens writeFile-metod. Anropet är asynkront så await används för att invänta svaret innan koden går vidare. */
-    await fs.writeFile('./tasks.json', JSON.stringify(newList));
+    await fs.writeFile("./tasks.json", JSON.stringify(newList));
     /* Det är vanligt att man vid skapande av någon ny resurs returnerar tillbaka den nya sak som skapades. Så den nya uppgiften skickas med som ett success-response. */
     res.send(newTask);
   } catch (error) {
@@ -81,15 +81,21 @@ app.post('/tasks', async (req, res) => {
   }
 });
 /* Express metod för att lyssna efter DELETE-anrop heter naturligt delete(). I övrigt fungerar den likadant som get och post */
-
-
-
-
-
-
-
+app.delete("/tasks/:id", async (req, res) => {
+  try {
+    id = req.params.id;
+    listBuffer = await fs.readFile("./tasks.json");
+    currentPosts = JSON.parse(listBuffer);
+    if (currentPosts > 0) {
+      await fs.readFile("./tasks.json")(
+        JSON.stringify(currentPosts.filter((post) => post.id != id))
+      );
+      res.send({ message: `Post med id ${id} togs bort` });
+    }
+  } catch {
+    res.status(404).send({ error: "Ingen post att ta bort" });
+  }
+});
 
 /* Med app.listen säger man åte servern att starta. Första argumentet är port - dvs. det portnummer man vill att servern ska köra på. Det sattes till 5000 på rad 9. Det andra argumentet är en anonym arrow-funktion som körs när servern har lyckats starta. Här skrivs bara ett meddelande ut som berättar att servern kör, så att man får feedback på att allt körts igång som det skulle. */
-app.listen(PORT, () => console.log('Server running on http://localhost:5000'));
-
-
+app.listen(PORT, () => console.log("Server running on http://localhost:5000"));

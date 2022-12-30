@@ -13,7 +13,6 @@ Om servern startats korrekt syns nu texten "Server running on http://localhost:5
 */
 "use strict";
 
-
 /* För att skapa en klass används nyckelordet class följt av klassens namn. Klasser bör ha stor inledande bokstav och döpas enligt det som kallas PascalCase. Inga parenteser används vid skapande av en klass. */
 class Api {
   /* Medlemsvariabel url, för att lagra en grund-url till servern. */
@@ -76,6 +75,17 @@ class Api {
   getAll() {
     return fetch(this.url)
       .then((result) => result.json())
+      .then((data) => data)
       .catch((err) => console.log(err));
+  }
+
+  remove(id) {
+    console.log(`Removing post with ${id}`);
+
+    return fetch(`${this.url}/${id}`, {
+      method: "DELETE",
+    })
+      .then((result) => result)
+      .catch((err) => err);
   }
 }
