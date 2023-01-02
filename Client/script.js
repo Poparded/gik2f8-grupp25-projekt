@@ -17,8 +17,8 @@ let usernameValid = true;
 let forumPostValid = true;
 let imageValid = true;
 const api = new Api("http://localhost:5000/tasks");
-const forumSiteElement = document.getElementById("root");
-
+const forumSiteElement = document.getElementById("forumList")
+console.log(forumSiteElement);
 function validateField(field) {
   const { name, value } = field;
   console.log(name);
@@ -112,20 +112,26 @@ function renderList() {
   console.log("rendering");
 
   api.getAll().then((forumPosts) => {
-    forumSiteElement.innerHTML = "";
+    forumSiteElement.innerHTML = '';
+
     forumPosts.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
     console.log(forumPosts);
-    forumPosts.forEach((formPost) =>
-      forumSiteElement.insertAdjacentHTML("afterend", renderFormPosts(formPost))
-    );
+    forumPosts.forEach((formPost) => {
+      console.log(formPost);
+      forumSiteElement.insertAdjacentHTML("beforeend", renderFormPosts(formPost));
+    });
   });
 }
 
 function renderFormPosts({ id, createdDate, username, forumPost, fileImage }) {
   let html = `
-  
+
+  <li class=" list opacity-50 select-none mt-2 py-2 border-b border-amber-300">
+
   <div class="bg-white rounded-lg shadow-lg p-3">
   <div class="flex justify-between items-center mb-2">
+  <div class="text-xs text-gray-600">${id}</div>
+
     <div class="text-xs text-gray-600">${createdDate}</div>
     <div class="text-xs font-bold text-gray-800">${username}</div>
     <button onclick= "deletePost(${id})"> Radera  </button>
@@ -133,13 +139,18 @@ function renderFormPosts({ id, createdDate, username, forumPost, fileImage }) {
   </div>
   <div class="mb-2">
     <p class="text-base font-serif text-gray-800">${forumPost}</p>
-  </div>
-  <div>
-    <img class="h-10 w-full object-cover" src="${fileImage}" alt="Attached image">
-  </div>
-</div>
-    
-`;
+  </div>`;
+
+  if (fileImage) {
+    html += `
+      <div>
+      <img class="h-10 w-full object-cover" src="${fileImage}" alt="Attached image">
+    </div>`;
+  }
+
+  html += `
+    </li>   
+    `;
 
   return html;
 }

@@ -78,7 +78,6 @@ class Api {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
-
   remove(id) {
     console.log(`Removing post with ${id}`);
 
