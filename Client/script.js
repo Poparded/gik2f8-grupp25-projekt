@@ -81,32 +81,28 @@ function onSubmit(e) {
   e.preventDefault();
   console.log(createdDateValid && usernameValid && forumPostValid && imageValid);
   if (createdDateValid && usernameValid && forumPostValid && imageValid) {
-    savePost();
+    savePost()
   }
 }
 
 function savePost() {
+
+
   const post = {
     createdDate: ForumSite.createdDate.value,
     username: ForumSite.username.value,
     forumPost: ForumSite.forumPost.value,
-    image: ForumSite.fileImage.value,
+    image: ForumSite.imageFile.value,
   };
+
+  // Send the JSON object to the server
   api.create(post).then((post) => {
-    /* Task kommer här vara innehållet i promiset. Om vi ska följa objektet hela vägen kommer vi behöva gå hela vägen till servern. Det är nämligen det som skickas med res.send i server/api.js, som api-klassens create-metod tar emot med then, översätter till JSON, översätter igen till ett JavaScript-objekt, och till sist returnerar som ett promise. Nu har äntligen det promiset fångats upp och dess innehåll - uppgiften från backend - finns tillgängligt och har fått namnet "task".  */
     if (post) {
       renderList();
     }
-    /*createdDate.value = null;
-    username.value = null
-    forumPost.value = null;
-    imageValid.value = null;
-    CreatedDateValid = true;
-    usernameValid = true
-    ForumPostValid = true;
-    ImageValid = true;*/
   });
-}
+};
+
 
 function renderList() {
   console.log("rendering");
@@ -134,7 +130,7 @@ function renderFormPosts({ id, createdDate, username, forumPost, fileImage }) {
 
     <div class="text-xs text-gray-600">${createdDate}</div>
     <div class="text-xs font-bold text-gray-800">${username}</div>
-    <button onclick= "deletePost(${id})"> Radera  </button>
+    <input type="checkbox" onclick="deletePost(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
 
   </div>
   <div class="mb-2">
@@ -142,6 +138,7 @@ function renderFormPosts({ id, createdDate, username, forumPost, fileImage }) {
   </div>`;
 
   if (fileImage) {
+    // Set the src attribute of the img element to the image data
     html += `
       <div>
       <img class="h-10 w-full object-cover" src="${fileImage}" alt="Attached image">
@@ -154,7 +151,6 @@ function renderFormPosts({ id, createdDate, username, forumPost, fileImage }) {
 
   return html;
 }
-
 function deletePost(id) {
   api.remove(id).then((result) => {
     renderList();
