@@ -116,7 +116,6 @@ async function savePost() {
     forumPost: ForumSite.forumPost.value,
     inappropriateLanguage: false,
     restrictedAge: false,
-
     image: image
   };
 
@@ -135,7 +134,7 @@ function renderList() {
   api.getAll().then((forumPosts) => {
     forumSiteElement.innerHTML = '';
 
-    forumPosts.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+    forumPosts.sort((a, b) => new Date(a.createdDate) - new Date(b.createdDate));
     console.log(forumPosts);
     forumPosts.forEach((formPost) => {
       console.log(formPost);
@@ -177,8 +176,8 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, inapprop
      console.log(imageUrl);*/
     // Set the src attribute of the img element to the image data
     html += `
-      <div>
-      <img class="h-25 w-25 object-cover" src="${image}" alt="Attached image">
+      <div class"">
+      <img class="object-cover h-70 w-96" src="${image}" alt="Attached image">
     </div>`;
 
 
