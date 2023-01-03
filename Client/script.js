@@ -94,7 +94,6 @@ function onSubmit(e) {
     savePost()
   }
 }
-// Convert image to base64
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -125,9 +124,6 @@ async function savePost() {
   });
 }
 
-
-
-// Read the image file as a base64 string
 
 function renderList() {
   console.log("rendering");
@@ -182,6 +178,14 @@ function renderFormPosts({ id, createdDate, username, forumPost, image }) {
 
   return html;
 }
+
+
+
+
+
+
+
+
 function deletePost(id) {
   api.remove(id).then((result) => {
     renderList();
