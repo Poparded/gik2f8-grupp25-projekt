@@ -1,5 +1,6 @@
 var string = 'Hello World!';
-
+alert("Gillar du snopp?")
+window.alert("DING DONG pling plong!");
 // Encode the String
 var encodedString = window.btoa(string);
 console.log(encodedString); // Outputs: "SGVsbG8gV29ybGQh"
@@ -113,8 +114,10 @@ async function savePost() {
     createdDate: ForumSite.createdDate.value,
     username: ForumSite.username.value,
     forumPost: ForumSite.forumPost.value,
-    image: image,
-    inappropriateLanguage: false
+    inappropriateLanguage: false,
+    restrictedAge: false,
+
+    image: image
   };
 
   // Send the JSON object to the server
@@ -141,43 +144,57 @@ function renderList() {
   });
 }
 
-function renderFormPosts({ id, createdDate, username, forumPost, image }) {
-  let html = `
-  <li class=" list opacity-50 select-none mt-2 py-2 border-b border-amber-300">
+function renderFormPosts({ id, createdDate, username, forumPost, image, inappropriateLanguage }) {
+  if (!inappropriateLanguage) {
+    let html = `
+
+  
+
+
+  <li class=" list select-none mt-2 py-2 border-b border-amber-300">
   <div class="bg-white rounded-lg shadow-lg p-3">
   <div class="flex justify-between items-center mb-2">
   <div class="text-xs text-gray-600">${id}</div>
     <div class="text-xs text-gray-600">${createdDate}</div>
     <div class="text-xs font-bold text-gray-800">${username}</div>
     <input type="checkbox" onclick="deletePost(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
-  </div>
+
+    </div>
   <div class="mb-2 ">
-    <p class="text-base font-serif text-gray-800">${forumPost}</p>
+    <p class="text-base font-serif decoration-lime-500 text-center my-20 text-x3">${forumPost}</p>
   </div>`;
 
-  // First, decode the base64-encoded image string
-  //const encodedImage = window.btoa(image)
-  /* console.log(image);
- 
-   const decodedImage = window.atob(image)
-   console.log(decodedImage);
- 
- 
-   // Create a new image file from the binary data
-   const imageUrl = URL.createObjectURL(new Blob([decodedImage], { type: 'image/jpg' }));
-   console.log(imageUrl);*/
-  // Set the src attribute of the img element to the image data
-  html += `
+    // First, decode the base64-encoded image string
+    //const encodedImage = window.btoa(image) 
+    /* console.log(image);
+   
+     const decodedImage = window.atob(image)
+     console.log(decodedImage);
+   
+   
+     // Create a new image file from the binary data
+     const imageUrl = URL.createObjectURL(new Blob([decodedImage], { type: 'image/jpg' }));
+     console.log(imageUrl);*/
+    // Set the src attribute of the img element to the image data
+    html += `
       <div>
-      <img class="h-30 w-20 object-cover" src="${image}" alt="Attached image">
+      <img class="h-25 w-25 object-cover" src="${image}" alt="Attached image">
     </div>`;
 
 
-  html += `
+    html += `
     </li>   
     `;
 
-  return html;
+    return html;
+  }
+  else {
+
+
+
+
+
+  }
 }
 
 
