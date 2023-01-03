@@ -150,7 +150,7 @@ function renderFormPosts({ id, createdDate, username, forumPost, image }) {
     <div class="text-xs font-bold text-gray-800">${username}</div>
     <input type="checkbox" onclick="deletePost(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
   </div>
-  <div class="mb-2">
+  <div class="mb-2 ">
     <p class="text-base font-serif text-gray-800">${forumPost}</p>
   </div>`;
 
