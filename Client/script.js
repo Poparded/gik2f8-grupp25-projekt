@@ -114,6 +114,7 @@ async function savePost() {
     username: ForumSite.username.value,
     forumPost: ForumSite.forumPost.value,
     image: image,
+    inappropriateLanguage: false
   };
 
   // Send the JSON object to the server
