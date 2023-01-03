@@ -1,5 +1,8 @@
 /* Importrerar nodemodulen express (installerad med npm), som är ett utbrett verktyg för att skapa och arbeta med webbservrar och hantera HTTP-förfrågningar i ett nodejs-backend. */
 "use strict"
+"use strict"
+const bodyParser = require('body-parser');
+
 const express = require('express');
 /* Skapar upp ett express-objekt, som i stort representerar en webbserver */
 const app = express();
@@ -11,8 +14,8 @@ const PORT = 5000;
 /* Expressobjektet, kallat app, har metoden "use" som används för att sätta inställningar hos vår server */
 app
   /* Man kan ange format etc. på de data som servern ska kunna ta emot och skicka. Metoderna json och urlencoded är inbyggda hos express */
-  .use(express.json())
-  .use(express.urlencoded({ extended: false }))
+  .use(bodyParser.json({ limit: '50mb' }))
+  .use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
   /* Man kan också ange vad som ska hända övergripande med samtliga förfrågningar. Alla förfrågningar kommer att gå genom nedanstående kod först, innan den behandlas vidare. */
   .use((req, res, next) => {
     /* Det vill säga, alla response-objekt kommer att få nedanstående headers. */

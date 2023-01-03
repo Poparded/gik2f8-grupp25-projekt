@@ -84,14 +84,26 @@ function onSubmit(e) {
     savePost()
   }
 }
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
 
-  function savePost() {
-
+async function savePost() {
+  // Convert the image to base64
+  const file = ForumSite.fileImage.files[0];
+  const image = await getBase64(file);
+  console.log(image);
+  // Create the post object
   const post = {
     createdDate: ForumSite.createdDate.value,
     username: ForumSite.username.value,
     forumPost: ForumSite.forumPost.value,
-    image: ForumSite.fileImage.value,
+    image: image,
   };
 
   // Send the JSON object to the server
@@ -100,7 +112,7 @@ function onSubmit(e) {
       renderList();
     }
   });
-};
+}
 
 
 function renderList() {
