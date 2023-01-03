@@ -1,3 +1,13 @@
+var string = 'Hello World!';
+
+// Encode the String
+var encodedString = window.btoa(string);
+console.log(encodedString); // Outputs: "SGVsbG8gV29ybGQh"
+
+// Decode the String
+var decodedString = window.atob(encodedString);
+console.log(decodedString); // Outputs: "Hello World!"
+
 ForumSite.createdDate.addEventListener("input", (e) => validateField(e.target));
 ForumSite.createdDate.addEventListener("blur", (e) => validateField(e.target));
 
@@ -81,32 +91,43 @@ function onSubmit(e) {
   e.preventDefault();
   console.log(createdDateValid && usernameValid && forumPostValid && imageValid);
   if (createdDateValid && usernameValid && forumPostValid && imageValid) {
-    savePost();
+    savePost()
   }
 }
+// Convert image to base64
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
 
-function savePost() {
+async function savePost() {
+  // Convert the image to base64
+  const file = ForumSite.fileImage.files[0];
+  const image = await getBase64(file);
+  console.log(image);
+  // Create the post object
   const post = {
     createdDate: ForumSite.createdDate.value,
     username: ForumSite.username.value,
     forumPost: ForumSite.forumPost.value,
-    image: ForumSite.fileImage.value,
+    image: image,
   };
+
+  // Send the JSON object to the server
   api.create(post).then((post) => {
-    /* Task kommer här vara innehållet i promiset. Om vi ska följa objektet hela vägen kommer vi behöva gå hela vägen till servern. Det är nämligen det som skickas med res.send i server/api.js, som api-klassens create-metod tar emot med then, översätter till JSON, översätter igen till ett JavaScript-objekt, och till sist returnerar som ett promise. Nu har äntligen det promiset fångats upp och dess innehåll - uppgiften från backend - finns tillgängligt och har fått namnet "task".  */
     if (post) {
       renderList();
     }
-    /*createdDate.value = null;
-    username.value = null
-    forumPost.value = null;
-    imageValid.value = null;
-    CreatedDateValid = true;
-    usernameValid = true
-    ForumPostValid = true;
-    ImageValid = true;*/
   });
 }
+
+
+
+// Read the image file as a base64 string
 
 function renderList() {
   console.log("rendering");
@@ -123,30 +144,37 @@ function renderList() {
   });
 }
 
-function renderFormPosts({ id, createdDate, username, forumPost, fileImage }) {
+function renderFormPosts({ id, createdDate, username, forumPost, image }) {
   let html = `
-
   <li class=" list opacity-50 select-none mt-2 py-2 border-b border-amber-300">
-
   <div class="bg-white rounded-lg shadow-lg p-3">
   <div class="flex justify-between items-center mb-2">
   <div class="text-xs text-gray-600">${id}</div>
-
     <div class="text-xs text-gray-600">${createdDate}</div>
     <div class="text-xs font-bold text-gray-800">${username}</div>
-    <button onclick= "deletePost(${id})"> Radera  </button>
-
+    <input type="checkbox" onclick="deletePost(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
   </div>
   <div class="mb-2">
     <p class="text-base font-serif text-gray-800">${forumPost}</p>
   </div>`;
 
-  if (fileImage) {
-    html += `
+  // First, decode the base64-encoded image string
+  //const encodedImage = window.btoa(image)
+  /* console.log(image);
+ 
+   const decodedImage = window.atob(image)
+   console.log(decodedImage);
+ 
+ 
+   // Create a new image file from the binary data
+   const imageUrl = URL.createObjectURL(new Blob([decodedImage], { type: 'image/jpg' }));
+   console.log(imageUrl);*/
+  // Set the src attribute of the img element to the image data
+  html += `
       <div>
-      <img class="h-10 w-full object-cover" src="${fileImage}" alt="Attached image">
+      <img class="h-30 w-full object-cover" src="${image}" alt="Attached image">
     </div>`;
-  }
+
 
   html += `
     </li>   
@@ -154,7 +182,6 @@ function renderFormPosts({ id, createdDate, username, forumPost, fileImage }) {
 
   return html;
 }
-
 function deletePost(id) {
   api.remove(id).then((result) => {
     renderList();

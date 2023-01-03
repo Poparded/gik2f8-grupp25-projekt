@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"name": ".vscode",
+			"path": ".vscode"
+		},
+		{
+			"name": "gik2f8-grupp25-projekt",
+			"path": "../gik2f8-grupp25-projekt"
+		},
+		{
+			"path": "Client"
+		},
+		{
+			"path": "Server"
+		}
+	],
+	"settings": {}
+}
