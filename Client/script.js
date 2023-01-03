@@ -85,14 +85,13 @@ function onSubmit(e) {
   }
 }
 
-function savePost() {
-
+  function savePost() {
 
   const post = {
     createdDate: ForumSite.createdDate.value,
     username: ForumSite.username.value,
     forumPost: ForumSite.forumPost.value,
-    image: ForumSite.imageFile.value,
+    image: ForumSite.fileImage.value,
   };
 
   // Send the JSON object to the server
@@ -151,6 +150,14 @@ function renderFormPosts({ id, createdDate, username, forumPost, fileImage }) {
 
   return html;
 }
+
+
+
+
+
+
+
+
 function deletePost(id) {
   api.remove(id).then((result) => {
     renderList();

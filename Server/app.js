@@ -113,6 +113,29 @@ app.delete('/tasks/:id', async (req, res) => {
   }
 });
 
+app.patch('/tasks', async (req, res) => {
+  try {
+    const task = req.body;
+
+    // Read the file contents
+    const ListBuffer = await fs.readFile('./tasks.json');
+    // Parse the file contents into a JavaScript object
+    const currentList = JSON.parse(ListBuffer);
+    // Find the task with the matching id
+    const i = currentList.findIndex(item => item.id === task.id);
+
+    // Toggle the completion status of the task
+    currentList[i].completed = !currentList[i].completed;
+
+    // Write the updated list to the file
+    await fs.writeFile('./tasks.json', JSON.stringify(currentList));
+
+    res.send(currentList);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
 
 
 
