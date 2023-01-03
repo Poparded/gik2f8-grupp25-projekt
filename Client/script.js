@@ -168,7 +168,7 @@ function renderFormPosts({ id, createdDate, username, forumPost, image }) {
   // Set the src attribute of the img element to the image data
   html += `
       <div>
-      <img class="h-30 w-full object-cover" src="${image}" alt="Attached image">
+      <img class="h-30 w-20 object-cover" src="${image}" alt="Attached image">
     </div>`;
 
 
