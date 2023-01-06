@@ -64,7 +64,7 @@ app.post('/tasks', async (req, res) => {
         (maxId, currentElement) =>
           /* Om id:t för den aktuella uppgiften är större än det i variabeln maxId, sätts maxId om till det id som nu är högst. maxId är från början satt till värdet av maxTaskId (1, enligt rad 53.).  */
           currentElement.id > maxId ? currentElement.id : maxId,
-        maxTaskId
+        maxTaskId 
       );
     }
 

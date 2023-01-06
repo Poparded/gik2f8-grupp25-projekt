@@ -1,6 +1,4 @@
 var string = 'Hello World!';
-alert("Gillar du snopp?")
-window.alert("DING DONG pling plong!");
 // Encode the String
 var encodedString = window.btoa(string);
 console.log(encodedString); // Outputs: "SGVsbG8gV29ybGQh"
@@ -157,7 +155,7 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, inapprop
     <div class="text-xs text-gray-600">${createdDate}</div>
     <div class="text-xs font-bold text-gray-800">${username}</div>
     <input type="checkbox" onclick="deletePost(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
-
+    
     </div>
   <div class="mb-2 ">
     <p class="text-base font-serif decoration-lime-500 text-center my-20 text-x3">${forumPost}</p>
@@ -210,3 +208,34 @@ function deletePost(id) {
 }
 
 renderList();
+
+
+//toolbar
+const toggleButton = document.getElementById('toggle-toolbar');
+const toolbar = document.getElementById('toolbar');
+
+toggleButton.addEventListener('click', () => {
+  if (toolbar.style.display === 'none') {
+    toolbar.style.display = 'flex';
+  } else {
+    toolbar.style.display = 'none';
+  }
+});
+
+//NUMBER COUNTING
+let userCount = 0;
+
+// Increment the user count when the page loads
+window.addEventListener('load', () => {
+  userCount++;
+
+  // Update the user count every 1000 milliseconds (1 second)
+  setInterval(() => {
+    document.getElementById('user-count').innerHTML = userCount;
+  }, 1000);
+});
+
+// Decrement the user count when the user leaves the page
+window.addEventListener('unload', () => {
+  userCount--;
+});

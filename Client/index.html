@@ -7,14 +7,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
     <title>cpgruppen25</title>
-  </head>
-  <body class="bg-gradient-to-r from-indigo-500 to-orange-500">
+  </head> 
+  <body class="bg-gray-500">
     <main>
+      
+      <header class="fixed top-0 w-full flex from-indigo-500 bg-indigo-700">
+        <button id="toggle-toolbar" class=" bg-indigo-700  text-white items-center px-3 py-2 hover:bg-gray-600">Meny</button>
+        <nav class="toolbar rounded-full" id="toolbar">
+          <a href="#" class="text-white items-center px-4 py-2 hover:bg-gray-600">Home</a>
+          <a href="#about-section" class="text-white items-center px-4 py-2 hover:bg-gray-600">Om oss</a>
+          <a href="användare.html" class="text-white items-center px-4 py-2 hover:bg-gray-600" target="_blank" rel="noopener noreferrer">Användare</a>
+        </nav>
+      </header>
+      
+      </div>
+      <style>
+        /* Use the Font Awesome icon library for the toggle button */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+
+.toolbar-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.toolbar {
+  background-color: #fff;
+  display: flex;
+  justify-content: flex-end;
+  /* Hide the toolbar by default */
+  display: none;
+}
+
+.toolbar-link {
+  color: #333;
+  text-decoration: none;
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+
+.toolbar-link:hover {
+  background-color: #eee;
+}
+
+      </style>
       <div id = "root">
-      <h1 class="font-bold text-black text-3xl text-center my-2"> Niklas Forum </h1>
+        <h1 class="font-bold text-black text-3xl text-center my-7">
+          <span class="bg-indigo-700 text-yellow-500 px-3 py-1">Blixt-fram</span>
+        </h1>
       </div> 
       <form id="ForumSite">
-        <section class="bg-indigo-500">
+        <section class="bg-indigo-700">
           <label class="text-black text-x1" for="date"> Datum:</label>
 
           <p class="message text-sm text-red-700 mb-2 hidden text-red-700" >Error message</p>
@@ -25,7 +71,7 @@
             name="createdDate"
           />
         </section>
-        <section class="bg-indigo-500 ">
+        <section class="bg-indigo-700">
           <label class="block pr-5 mb-2 text-xl text-black " for="username"
             >Användarnamn</label
           >
@@ -37,7 +83,7 @@
             name="username"
           />
         </section>
-        <section class="mb-2">
+        <section class="mb-2 bg-indigo-700">
           <label
             class="block text-black text-sm font-bold mb-2"
             for="forumInlägg"
@@ -50,7 +96,7 @@
             id="forumPost"
             name="forumPost"
             class="resize-none w-full rounded-md border-yellow-500 border-2 focus-within:outline-none focus:border-yellow-600 px-1 py-2"
-          ></textarea>
+          ></textarea>  
         </section>
 
         <section class="bg-indigo-500">
@@ -83,7 +129,50 @@
       <script src="script.js"></script>
     </main>
   </body>
+
+
+<div>
+  <h2 id="about-section">About</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+</div>
+
+<div>
+  <h2 id="contact-section">contact</h2>
+  <form>
+    <label for="email-subject">Subject:</label><br>
+    <input type="text" id="email-subject" name="subject"><br>
+    <label for="email-body">Body:</label><br>
+    <textarea id="email-body" name="body"></textarea><br>
+    <a href="#" id="send-email" class="text-white items-center px-4 py-2 hover:bg-gray-600">Send Email</a>
+  </form>
+  
+  <script>
+    const sendEmailButton = document.getElementById('send-email');
+    const subjectInput = document.getElementById('email-subject');
+    const bodyInput = document.getElementById('email-body');
+  
+    sendEmailButton.addEventListener('click', (event) => {
+      event.preventDefault();
+  
+      const subject = encodeURIComponent(subjectInput.value);
+      const body = encodeURIComponent(bodyInput.value);
+      const emailUrl = `mailto: h21nikcl@du.se?subject=${subject}&body=${body}`;
+  
+      window.location.href = emailUrl;
+    });
+  </script>
+  
+</div>
+<div id="user-count">
+  <p>USERS ONLINE NOW</p>
+</div>
+
+
+
+
   <footer>
+    <p>USERS ONLINE NOW</p>
     <div id="toolbar">
       <div class="letter letter-a">C</div>
       <div class="letter letter-m">P</div>
