@@ -6,6 +6,7 @@ console.log(encodedString); // Outputs: "SGVsbG8gV29ybGQh"
 // Decode the String
 var decodedString = window.atob(encodedString);
 console.log(decodedString); // Outputs: "Hello World!"
+window.addEventListener("load", checkAge);
 
 ForumSite.createdDate.addEventListener("input", (e) => validateField(e.target));
 ForumSite.createdDate.addEventListener("blur", (e) => validateField(e.target));
@@ -155,11 +156,14 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, inapprop
     <div class="text-xs text-gray-600">${createdDate}</div>
     <div class="text-xs font-bold text-gray-800">${username}</div>
     <input type="checkbox" onclick="deletePost(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
-    
+    <input id="restricted-age-button" type="checkbox" onclick="restrictAge(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
+
     </div>
   <div class="mb-2 ">
     <p class="text-base font-serif decoration-lime-500 text-center my-20 text-x3">${forumPost}</p>
-  </div>`;
+  </div>`
+
+      ;
 
     // First, decode the base64-encoded image string
     //const encodedImage = window.btoa(image) 
@@ -198,7 +202,27 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, inapprop
 
 
 
+function checkAge() {
+  let ageValid;
+  console.log("checking age");
+  const age = prompt("Please enter your age:");
+  if (age < 18) {
+    alert("Sorry, you must be 21 or older to view this content.");
+    ageValid = false;
+  } else {
+    ageValid = true;
+  }
+}
 
+async function restrictAge(id) {
+  const restrictPost = {
+    id: id,
+    restrictAge: true
+
+  }
+  api.update(restrictPost)
+
+}
 
 
 function deletePost(id) {
