@@ -124,14 +124,14 @@ app.patch('/tasks', async (req, res) => {
     console.log("In patch");
     const currentPosts = JSON.parse(ListBuffer)
     const i = currentPosts.findIndex(item => item.id === post.id);
-    if (!currentPosts[i].restrictAge) {
-      currentPosts[i].restrictAge = post.restrictAge;
+    if (!currentPosts[i].restrictedAge) {
+      currentPosts[i].restrictedAge = post.restrictedAge;
       await fs.writeFile(
         './tasks.json',
         JSON.stringify(currentPosts));
     }
-    else if (currentPosts[i].restrictAge)
-      currentList[i].restrictAge = !task.restrictAge;
+    else if (currentPosts[i].restrictedAge)
+      currentPosts[i].restrictedAge = !post.restrictedAge;
     await fs.writeFile(
       './tasks.json',
       JSON.stringify(currentPosts));

@@ -1,11 +1,4 @@
-var string = 'Hello World!';
-// Encode the String
-var encodedString = window.btoa(string);
-console.log(encodedString); // Outputs: "SGVsbG8gV29ybGQh"
 
-// Decode the String
-var decodedString = window.atob(encodedString);
-console.log(decodedString); // Outputs: "Hello World!"
 window.addEventListener("load", checkAge);
 
 ForumSite.createdDate.addEventListener("input", (e) => validateField(e.target));
@@ -21,7 +14,7 @@ ForumSite.fileImage.addEventListener("input", (e) => validateField(e.target));
 ForumSite.fileImage.addEventListener("blur", (e) => validateField(e.target));
 
 ForumSite.addEventListener("submit", onSubmit);
-
+let ageValid;
 let createdDateValid = true;
 let usernameValid = true;
 let forumPostValid = true;
@@ -141,13 +134,29 @@ function renderList() {
     });
   });
 }
+function checkAge() {
+  console.log("checking age");
+  const age = prompt("Please enter your age:");
+  console.log(age);
+  if (age > 18) {
+    ageValid = true;
+    console.log("Agevalid");
+  } else {
+    console.log("Agevalid not valid");
+    ageValid = false;
 
-function renderFormPosts({ id, createdDate, username, forumPost, image, inappropriateLanguage }) {
-  if (!inappropriateLanguage) {
+
+  }
+}
+
+function renderFormPosts({ id, createdDate, username, forumPost, image, restrictedAge }) {
+  console.log(ageValid);
+  if (restrictedAge && !ageValid) {
     let html = `
 
   
 
+    <div class = "blur-sm  ">
 
   <li class=" list select-none mt-2 py-2 border-b border-amber-300">
   <div class="bg-white rounded-lg shadow-lg p-3">
@@ -155,30 +164,22 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, inapprop
   <div class="text-xs text-gray-600">${id}</div>
     <div class="text-xs text-gray-600">${createdDate}</div>
     <div class="text-xs font-bold text-gray-800">${username}</div>
-    <input type="checkbox" onclick="deletePost(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
-    <input id="restricted-age-button" type="checkbox" onclick="restrictAge(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
+    <input type="checkbox" onclick="deletePost(${id})" class=" blur-none 	inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
+    <input id="restricted-age-button" type="checkbox" onclick="restrictAge(${id})" class=" blur-none checked	inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
 
     </div>
+
   <div class="mb-2 ">
     <p class="text-base font-serif decoration-lime-500 text-center my-20 text-x3">${forumPost}</p>
-  </div>`
+  </div>
+  </div>
+  `
 
       ;
 
-    // First, decode the base64-encoded image string
-    //const encodedImage = window.btoa(image) 
-    /* console.log(image);
-   
-     const decodedImage = window.atob(image)
-     console.log(decodedImage);
-   
-   
-     // Create a new image file from the binary data
-     const imageUrl = URL.createObjectURL(new Blob([decodedImage], { type: 'image/jpg' }));
-     console.log(imageUrl);*/
-    // Set the src attribute of the img element to the image data
+
     html += `
-      <div class"">
+      <div>
       <img class="object-cover h-70 w-96" src="${image}" alt="Attached image">
     </div>`;
 
@@ -191,7 +192,40 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, inapprop
   }
   else {
 
+    let html = `
 
+  
+
+
+    <li class=" list select-none mt-2 py-2 border-b border-amber-300">
+    <div class="bg-white rounded-lg shadow-lg p-3">
+    <div class="flex justify-between items-center mb-2">
+    <div class="text-xs text-gray-600">${id}</div>
+      <div class="text-xs text-gray-600">${createdDate}</div>
+      <div class="text-xs font-bold text-gray-800">${username}</div>
+      <input type="checkbox" onclick="deletePost(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
+      <input id="restricted-age-button" type="checkbox" onclick="restrictAge(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
+  
+      </div>
+    <div class="mb-2 ">
+      <p class="text-base font-serif decoration-lime-500 text-center my-20 text-x3">${forumPost}</p>
+    </div>
+    
+ `
+
+      ;
+
+    html += `
+        <div class"">
+        <img class="object-cover h-70 w-96" src="${image}" alt="Attached image">
+      </div>`;
+
+
+    html += `
+      </li>   
+      `;
+
+    return html;
 
 
 
@@ -202,25 +236,19 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, inapprop
 
 
 
-function checkAge() {
-  let ageValid;
-  console.log("checking age");
-  const age = prompt("Please enter your age:");
-  if (age < 18) {
-    alert("Sorry, you must be 21 or older to view this content.");
-    ageValid = false;
-  } else {
-    ageValid = true;
-  }
-}
+
 
 async function restrictAge(id) {
   const restrictPost = {
     id: id,
-    restrictAge: true
+    restrictedAge: true
 
   }
-  api.update(restrictPost)
+  api.update(restrictPost).then((result) => {
+    renderList();
+
+
+  })
 
 }
 
