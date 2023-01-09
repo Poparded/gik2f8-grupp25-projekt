@@ -163,9 +163,15 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, restrict
     <div class="text-xs text-gray-600">${id}</div>
       <div class="text-xs text-gray-600">${createdDate}</div>
       <div class="text-xs font-bold text-gray-800">${username}</div>
+      
+      <label for="Delete"> Radera
       <input type="checkbox" onclick="deletePost(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
+      </label>
+      <label for="Patch"> Restriktera ålder
+
       <input id="restricted-age-button" type="checkbox" onclick="restrictAge(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
-  
+      </label>
+
       </div>
     <div class="mb-2 ">
       <p class="text-base font-serif decoration-lime-500 text-center my-20 text-x3">${forumPost}</p>
@@ -201,9 +207,14 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, restrict
     <div class="text-xs text-gray-600">${id}</div>
       <div class="text-xs text-gray-600">${createdDate}</div>
       <div class="text-xs font-bold text-gray-800">${username}</div>
+      <label for="Delete"> Delete
+
       <input type="checkbox" onclick="deletePost(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
+      </label>
+      <label for="Patch"> Restriktera ålder
+
       <input id="restricted-age-button" type="checkbox" onclick="restrictAge(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
-  
+      </label>
       </div>
     <div class="mb-2 ">
       <p class="text-base font-serif decoration-lime-500 text-center my-20 text-x3">${forumPost}</p>
