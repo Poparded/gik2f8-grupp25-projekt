@@ -2,76 +2,68 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="shortcut icon" href="#">
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
     <title>cpgruppen25</title>
-  </head> 
-  <body class="bg-gray-500">
+  </head>
+  <body class="bg-slate-400">
     <main>
-      
-      <header class="fixed top-0 w-full flex from-indigo-500 bg-indigo-700">
-        <button id="toggle-toolbar" class=" bg-indigo-700  text-white items-center px-3 py-2 hover:bg-gray-600">Meny</button>
-        <nav class="toolbar rounded-full" id="toolbar">
-          <a href="#" class="text-white items-center px-4 py-2 hover:bg-gray-600">Home</a>
-          <a href="#about-section" class="text-white items-center px-4 py-2 hover:bg-gray-600">Om oss</a>
-          <a href="användare.html" class="text-white items-center px-4 py-2 hover:bg-gray-600" target="_blank" rel="noopener noreferrer">Användare</a>
+      <header class="fixed top-0 w-full flex">
+        <button
+          id="toggle-toolbar"
+          class="bg-slate-300 text-black items-center px-3 py-2 hover:text-black border-2 border-gray-500  hover:bg-gray-200"
+        >
+          Meny
+        </button>
+        <nav
+          class="toolbar rounded-full bg-slate-300 border-2 border-gray-500"
+          id="toolbar"
+        >
+          <a
+            href="#index.html"
+            class="text-black items-center px-4 py-2 hover:bg-gray-200"
+            >Home</a
+          >
+          <a
+            href="#about-section"
+            class="text-black items-center px-4 py-2 hover:bg-gray-200"
+            >Om oss</a
+          >
+         
         </nav>
       </header>
-      
-      <style>
-        /* Use the Font Awesome icon library for the toggle button */
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
-
-.toolbar-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.toolbar {
-  background-color: #fff;
-  display: flex;
-  justify-content: flex-end;
-  /* Hide the toolbar by default */
-  display: none;
-}
-
-.toolbar-link {
-  color: #333;
-  text-decoration: none;
-  padding: 1rem;
-  font-size: 1.2rem;
-}
-
-.toolbar-link:hover {
-  background-color: #eee;
-}
-
-      </style>
-      <div id = "root">
-        <h1 class="font-bold text-black text-3xl text-center my-7">
-          <span class="bg-indigo-700 text-yellow-500 px-3 py-1">Blixt-fram</span>
+      <div id="root">
+        <h1 class="font-bold text-black text-3xl text-center my-20 text-outline-black">
+          <span class="bg-transparent text-yellow-500 px-3 py-1 text-5xl"
+            >Blixter</span
+          >
         </h1>
-      </div> 
-      <form id="ForumSite">
-        <section class="bg-indigo-700">
-          <label class="text-black text-x1" for="date"> Datum:</label>
+      </div>
+      <div class="" id="post-counter"><h1>Antal inlägg</h1></div>
 
-          <p class="message text-sm text-red-700 mb-2 hidden text-red-700" >Error message</p>
+      <form id="ForumSite">
+        <section class="post border-2 border-gray-500 bg-slate-300 py-3 pl-2">
+          <label class="text-black text-lx" for="date"> Datum:</label>
+
+          <p class="message text-sm text-red-700 mb-2 hidden text-red-700">
+            Error message
+          </p>
           <input
             class="form-input rounded-md shadow-sm"
             type="date"
             id="createdDate"
             name="createdDate"
           />
+          <span class="fa fa-thumbs-up" onclick="like()"></span>
+          <span class="fa fa-thumbs-down" onclick="dislike()"></span>
         </section>
-        <section class="bg-indigo-700">
-          <label class="block pr-5 mb-2 text-xl text-black " for="username"
+        <section
+          class="post bg-slate-300 pl-2 border-x-2  border-gray-500"
+        >
+          <label class="block pr-5 mb-2 text-xl text-black" for="username"
             >Användarnamn</label
           >
           <p class="message text-sm text-red-700 mb-2 hidden">Error message</p>
@@ -82,7 +74,7 @@
             name="username"
           />
         </section>
-        <section class="mb-2 bg-indigo-700">
+        <section class="post pl-2 bg-slate-300 border-2 border-gray-500">
           <label
             class="block text-black text-sm font-bold mb-2"
             for="forumInlägg"
@@ -90,18 +82,20 @@
           >
           <p class="message text-sm text-red-700 mb-2 hidden">Error message</p>
           <textarea
-            maxlength="500"
+            maxlength="30"
             rows="5"
             id="forumPost"
             name="forumPost"
-            class="resize-none w-full rounded-md border-yellow-500 border-2 focus-within:outline-none focus:border-yellow-600 px-1 py-2"
-          ></textarea>  
+            class="resize-none w-8/12 rounded-md border-yellow-500 border-2 focus-within:outline-none focus:border-yellow-600 px-1 py-3"
+          ></textarea>
         </section>
 
-        <section class="bg-indigo-500">
+        <section
+          class="post bg-slate-300 pl-3 py-4 border-x-2 border-b-2 border-gray-500"
+        >
           <p class="message text-sm text-red-700 mb-2 hidden">Error message</p>
 
-          <label for="Image"></label>
+          <label for="Image "></label>
           <input
             type="file"
             id="fileImage"
@@ -109,73 +103,59 @@
             accept="image/png, image/jpeg , image/webp"
           />
         </section>
-        <button
-          name="submitForumPost"
-          class="btn-blue-500 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+        <section class="post bg-slate-300 border-1 border-black">
+          <button
+            name="submitForumPost"
+            class="btn-bg-slate-300 rounded-md shadow-md hover:bg-gray-200 focus:outline-none focus:shadow-outline-blue active:bg-slate-300 text-lg w-40 h-10 border-2 border-gray-500 py-1"
+            type="submit"
+          >
+            Skicka
+          </button>
+        </section>
 
-          type="submit"
-        >
-          Spara
-        </button>
-
-        
-<ul id="forumList">
-</ul>
-<div id="test"></div>
-
+        <ul id="forumList"></ul>
+        <div id="test"></div>
       </form>
+
       <script src="Api.js"></script>
       <script src="script.js"></script>
     </main>
   </body>
 
+  <div class="absolute right-5">
+    <h2 id="about-section" class="mt-5 font-bold">Om oss:</h2>
+    <p class="my-3">
+      Vi är tre duktiga studenter på Högskolan Dalarna
+      <p>Munther är 29 år gammal, gillar att träna och spela schack</p>
+    </p>
+    <p>Arvid är 20 år gammal, gillar att träna thaiboxning och äta thaimat</p>
+    <p>
+      Niklas är 21 år gammal, gillar att lyssna på music (kan visas med
+      statistik), åka längskidor och hänga med Arvid på fredagsmys.
+    </p>
+  </div>
 
-<div>
-  <h2 id="about-section">About</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
-</div>
-
-<div>
-  <h2 id="contact-section">contact</h2>
-  <form>
-    <label for="email-subject">Subject:</label><br>
-    <input type="text" id="email-subject" name="subject"><br>
-    <label for="email-body">Body:</label><br>
-    <textarea id="email-body" name="body"></textarea><br>
-    <a href="#" id="send-email" class="text-white items-center px-4 py-2 hover:bg-gray-600">Send Email</a>
-  </form>
-  
-  <script>
-    const sendEmailButton = document.getElementById('send-email');
-    const subjectInput = document.getElementById('email-subject');
-    const bodyInput = document.getElementById('email-body');
-  
-    sendEmailButton.addEventListener('click', (event) => {
-      event.preventDefault();
-  
-      const subject = encodeURIComponent(subjectInput.value);
-      const body = encodeURIComponent(bodyInput.value);
-      const emailUrl = `mailto: h21nikcl@du.se?subject=${subject}&body=${body}`;
-  
-      window.location.href = emailUrl;
-    });
-  </script>
-  
-</div>
-<div id="user-count">
-  <p>USERS ONLINE NOW</p>
-</div>
-
-
-
+  <div>
+    <h2 id="contact-section" class="ml-2 my-2 font-bold">Kontakta oss</h2>
+    <form class="pl-2">
+      <label for="email-subject">Rubrik:</label><br />
+      <input type="text" id="email-subject" name="subject" /><br />
+      <label for="email-body">Meddelande:</label><br />
+      <textarea id="email-body" name="body" class="mt-3"></textarea><br />
+      <a
+        href="#"
+        id="send-email"
+        class="text-white items-center px-4 py-2 hover:bg-gray-600"
+        >Send Email</a
+      >
+    </form>
+  </div>
 
   <footer>
-    <p>USERS ONLINE NOW</p>
     <div id="toolbar">
-      <div class="letter letter-a">C</div>
-      <div class="letter letter-m">P</div>
-      <div class="letter letter-n">G</div>
+      <div class="letter letter-a">G</div>
+      <div class="letter letter-m">2</div>
+      <div class="letter letter-n">5</div>
     </div>
     <style>
       #toolbar {
@@ -184,62 +164,110 @@
         justify-content: space-around;
         width: 100%;
         height: 60px;
-        background-color: #333;
+        background-color: #226 232 240;
         color: #fff;
       }
-    
+
       .letter {
         font-size: 2rem;
         font-weight: bold;
       }
-    
+
       .letter-a {
         animation: wave-a 2s ease-in-out infinite;
       }
-    
+
       .letter-m {
         animation: wave-m 2s ease-in-out infinite;
       }
-    
+
       .letter-n {
         animation: wave-n 2s ease-in-out infinite;
       }
-    
+
       @keyframes wave-a {
-        0% { transform: translateY(0); }
-        10% { transform: translateY(-10px); }
-        20% { transform: translateY(0); }
-        30% { transform: translateY(-5px); }
-        40% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-        60% { transform: translateY(0); }
-        70% { transform: translateY(-5px); }
-        80% { transform: translateY(0); }
-        90% { transform: translateY(-10px); }
-        100% { transform: translateY(0); }
+        0% {
+          transform: translateY(0);
+        }
+        10% {
+          transform: translateY(-10px);
+        }
+        20% {
+          transform: translateY(0);
+        }
+        30% {
+          transform: translateY(-5px);
+        }
+        40% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(0);
+        }
+        70% {
+          transform: translateY(-5px);
+        }
+        80% {
+          transform: translateY(0);
+        }
+        90% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0);
+        }
       }
-    
+
       @keyframes wave-m {
-        0% { transform: translateY(0); }
-        15% { transform: translateY(-10px); }
-        30% { transform: translateY(0); }
-        45% { transform: translateY(-5px); }
-        60% { transform: translateY(0); }
-        75% { transform: translateY(-10px); }
-        90% { transform: translateY(0); }
-        100% { transform: translateY(-5px); }
+        0% {
+          transform: translateY(0);
+        }
+        15% {
+          transform: translateY(-10px);
+        }
+        30% {
+          transform: translateY(0);
+        }
+        45% {
+          transform: translateY(-5px);
+        }
+        60% {
+          transform: translateY(0);
+        }
+        75% {
+          transform: translateY(-10px);
+        }
+        90% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-5px);
+        }
       }
-    
+
       @keyframes wave-n {
-        0% { transform: translateY(0); }
-        20% { transform: translateY(-10px); }
-        40% { transform: translateY(0); }
-        60% { transform: translateY(-5px); }
-        80% { transform: translateY(0); }
-        100% { transform: translateY(-10px); }
+        0% {
+          transform: translateY(0);
+        }
+        20% {
+          transform: translateY(-10px);
+        }
+        40% {
+          transform: translateY(0);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+        80% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-10px);
+        }
       }
     </style>
-    
-    
   </footer>
 </html>

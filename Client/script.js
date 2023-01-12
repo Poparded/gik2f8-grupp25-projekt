@@ -14,6 +14,7 @@ ForumSite.fileImage.addEventListener("input", (e) => validateField(e.target));
 ForumSite.fileImage.addEventListener("blur", (e) => validateField(e.target));
 
 ForumSite.addEventListener("submit", onSubmit);
+let count;
 let ageValid;
 let createdDateValid = true;
 let usernameValid = true;
@@ -127,7 +128,9 @@ function renderList() {
     forumSiteElement.innerHTML = '';
 
     forumPosts.sort((a, b) => new Date(a.createdDate) - new Date(b.createdDate));
-    console.log(forumPosts);
+    count = forumPosts.length;
+    console.log("Det finns:" + count);
+    postcount(count);
     forumPosts.forEach((formPost) => {
       console.log(formPost);
       forumSiteElement.insertAdjacentHTML("beforeend", renderFormPosts(formPost));
@@ -141,16 +144,18 @@ function checkAge() {
   if (age > 18) {
     ageValid = true;
     console.log("Agevalid");
-  } else {
+  } else if (age < 18) {
     console.log("Agevalid not valid");
     ageValid = false;
 
 
   }
+
 }
 
 function renderFormPosts({ id, createdDate, username, forumPost, image, restrictedAge }) {
-  console.log(ageValid);
+
+
   if (restrictedAge && !ageValid) {
     let html = `
 
@@ -207,7 +212,7 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, restrict
     <div class="text-xs text-gray-600">${id}</div>
       <div class="text-xs text-gray-600">${createdDate}</div>
       <div class="text-xs font-bold text-gray-800">${username}</div>
-      <label for="Delete"> Delete
+      <label for="Delete"> Radera
 
       <input type="checkbox" onclick="deletePost(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
       </label>
@@ -283,20 +288,46 @@ toggleButton.addEventListener('click', () => {
   }
 });
 
-//NUMBER COUNTING
-let userCount = 0;
-
-// Increment the user count when the page loads
-window.addEventListener('load', () => {
-  userCount++;
-
-  // Update the user count every 1000 milliseconds (1 second)
-  setInterval(() => {
-    document.getElementById('user-count').innerHTML = userCount;
-  }, 1000);
-});
 
 // Decrement the user count when the user leaves the page
 window.addEventListener('unload', () => {
   userCount--;
 });
+// mailto function 
+document.addEventListener("DOMContentLoaded", function () {
+  const sendEmailButton = document.getElementById('send-email');
+  const subjectInput = document.getElementById('email-subject');
+  const bodyInput = document.getElementById('email-body');
+
+  sendEmailButton.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    const subject = encodeURIComponent(subjectInput.value);
+    const body = encodeURIComponent(bodyInput.value);
+    const emailUrl = `mailto: h21nikcl@du.se?subject=${subject}&body=${body}`;
+
+    window.location.href = emailUrl;
+  });
+});
+// posts counter
+
+
+
+function postcount(count) {
+  const existingcount = document.querySelector("count");
+  console.log(existingcount);
+  existingcount && root.removeChild(existingcount);
+
+  postCounter = document.getElementById("post-counter");
+  postCounter.insertAdjacentHTML("beforeend", generateCount(count))
+}
+function generateCount(count) {
+  let html = `
+
+  <section class="count">
+
+<div class="count">${count}</div>
+ 
+</section>`
+  return html
+}
