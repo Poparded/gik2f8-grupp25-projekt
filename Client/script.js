@@ -331,3 +331,22 @@ function generateCount(count) {
 </section>`
   return html
 }
+
+var likeBtn = document.getElementById("likeBtn");
+var dislikeBtn = document.getElementById("dislikeBtn");
+
+//Add event listener to like button
+likeBtn.addEventListener("click", like);
+
+//Add event listener to dislike button
+dislikeBtn.addEventListener("click", dislike);
+
+function like() {
+  // code to handle a like
+  console.log("like button clicked");
+}
+
+function dislike() {
+  // code to handle a dislike
+  console.log("dislike button clicked");
+}
