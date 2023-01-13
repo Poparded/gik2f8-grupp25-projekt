@@ -314,9 +314,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function postcount(count) {
-  const existingcount = document.querySelector("count");
-  console.log(existingcount);
-  existingcount && root.removeChild(existingcount);
+  const existingcount = document.querySelector(".count");
+  if (existingcount) {
+    existingcount.parentNode.removeChild(existingcount);
+  }
 
   postCounter = document.getElementById("post-counter");
   postCounter.insertAdjacentHTML("beforeend", generateCount(count))
@@ -324,29 +325,28 @@ function postcount(count) {
 function generateCount(count) {
   let html = `
 
-  <section class="count">
+  <section>
 
 <div class="count">${count}</div>
  
 </section>`
   return html
 }
+document.addEventListener("DOMContentLoaded", function () {
+  // your script code here
+  // Get the buttons
+  var likeBtn = document.getElementById("likeBtn");
+  var dislikeBtn = document.getElementById("dislikeBtn");
 
-var likeBtn = document.getElementById("likeBtn");
-var dislikeBtn = document.getElementById("dislikeBtn");
+  // Add event listener to like button
+  likeBtn.addEventListener("click", function () {
+    // code to handle a like
+    console.log("like button clicked");
+  });
 
-//Add event listener to like button
-likeBtn.addEventListener("click", like);
-
-//Add event listener to dislike button
-dislikeBtn.addEventListener("click", dislike);
-
-function like() {
-  // code to handle a like
-  console.log("like button clicked");
-}
-
-function dislike() {
-  // code to handle a dislike
-  console.log("dislike button clicked");
-}
+  // Add event listener to dislike button
+  dislikeBtn.addEventListener("click", function () {
+    // code to handle a dislike
+    console.log("dislike button clicked");
+  });
+});
