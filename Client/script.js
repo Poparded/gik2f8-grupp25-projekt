@@ -88,15 +88,20 @@ function onSubmit(e) {
     savePost()
   }
 }
+// Funktion för att hämta en base64-kodad bild från en fil
 function getBase64(file) {
+  // Skapar en ny Promise och returnerar den
   return new Promise((resolve, reject) => {
+    // Skapar en ny FileReader
     const reader = new FileReader();
+    // Läser in filen som en data-URL
     reader.readAsDataURL(file);
+    // När läsningen är klar, körs resolve med resultatet
     reader.onload = () => resolve(reader.result);
+    // När det uppstår ett fel, körs reject med felet
     reader.onerror = error => reject(error);
   });
 }
-
 async function savePost() {
   // Convert the image to base64
   const file = ForumSite.fileImage.files[0];
@@ -107,7 +112,6 @@ async function savePost() {
     createdDate: ForumSite.createdDate.value,
     username: ForumSite.username.value,
     forumPost: ForumSite.forumPost.value,
-    inappropriateLanguage: false,
     restrictedAge: false,
     image: image
   };
@@ -122,15 +126,20 @@ async function savePost() {
 
 
 function renderList() {
-  console.log("rendering");
+  console.log("Rendrar lista med foruminlägg...");
 
   api.getAll().then((forumPosts) => {
+    //Rensar den inre HTML-koden för forumplatsen för att säkerställa att inget tidigare innehåll visas
     forumSiteElement.innerHTML = '';
 
+    //Sorterar inläggen efter deras skapadedatum
     forumPosts.sort((a, b) => new Date(a.createdDate) - new Date(b.createdDate));
-    count = forumPosts.length;
-    console.log("Det finns:" + count);
+    //Räkning av antalet inlägg och lagring i en variabel
+    const count = forumPosts.length;
+    console.log("Det finns " + count + " foruminlägg.");
+    //Anropar postcount-funktionen och passerar den count-variabeln
     postcount(count);
+    //Itererar genom varje inlägg och renderar det på sidan
     forumPosts.forEach((formPost) => {
       console.log(formPost);
       forumSiteElement.insertAdjacentHTML("beforeend", renderFormPosts(formPost));
@@ -153,14 +162,16 @@ function checkAge() {
 
 }
 
+
 function renderFormPosts({ id, createdDate, username, forumPost, image, restrictedAge }) {
 
+  // Kollar om inlägget har begränsad ålder och om användarens ålder inte är giltig
 
   if (restrictedAge && !ageValid) {
+    // Skapar en variabel för HTML-koden för inlägget
+
     let html = `
-
   
-
     
     <li class=" blur-sm list select-none mt-2 py-2 border-b border-amber-300">
     <div class="bg-white rounded-lg shadow-lg p-3">
@@ -173,10 +184,8 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, restrict
       <input type="checkbox" onclick="deletePost(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
       </label>
       <label for="Patch"> Restriktera ålder
-
       <input id="restricted-age-button" type="checkbox" onclick="restrictAge(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
       </label>
-
       </div>
     <div class="mb-2 ">
       <p class="text-base font-serif decoration-lime-500 text-center my-20 text-x3">${forumPost}</p>
@@ -195,17 +204,16 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, restrict
     html += `
       </li>   
       `;
+    //Returnerar HTML-koden för inlägget
 
     return html;
 
   }
   else {
+    // Skapar en variabel för HTML-koden för inlägget
 
     let html = `
-
   
-
-
     <li class="  list select-none mt-2 py-2 border-b border-amber-300">
     <div class="bg-white rounded-lg shadow-lg p-3">
     <div class="flex justify-between items-center mb-2">
@@ -213,11 +221,9 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, restrict
       <div class="text-xs text-gray-600">${createdDate}</div>
       <div class="text-xs font-bold text-gray-800">${username}</div>
       <label for="Delete"> Radera
-
       <input type="checkbox" onclick="deletePost(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
       </label>
       <label for="Patch"> Restriktera ålder
-
       <input id="restricted-age-button" type="checkbox" onclick="restrictAge(${id})" class="inline-block bg-amber-500 text-xs text-amber-900 border border-white px-3 py-1 rounded-md ml-2"></input>
       </label>
       </div>
@@ -238,6 +244,7 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, restrict
     html += `
       </li>   
       `;
+    //Returnerar HTML-koden för inlägget
 
     return html;
 
@@ -246,28 +253,21 @@ function renderFormPosts({ id, createdDate, username, forumPost, image, restrict
   }
 }
 
-
-
-
-
-
-
 async function restrictAge(id) {
+  // Skapar ett objekt för att representera inlägget med begränsad ålder
   const restrictPost = {
     id: id,
     restrictedAge: true
-
   }
+  // Anropar API:et för att uppdatera inlägget med begränsad ålder
   api.update(restrictPost).then((result) => {
+    // Renderar listan med inlägg igen för att visa ändringen
     renderList();
-
-
-  })
-
+  });
 }
-
-
+// Funktion för att radera ett inlägg med hjälp av dess id
 function deletePost(id) {
+  // Anropar API-metoden för att ta bort ett inlägg och sedan renderar om listan med inlägg igen
   api.remove(id).then((result) => {
     renderList();
   });
@@ -276,7 +276,7 @@ function deletePost(id) {
 renderList();
 
 
-//toolbar
+// Verktygsfältet
 const toggleButton = document.getElementById('toggle-toolbar');
 const toolbar = document.getElementById('toolbar');
 
@@ -289,64 +289,50 @@ toggleButton.addEventListener('click', () => {
 });
 
 
-// Decrement the user count when the user leaves the page
-window.addEventListener('unload', () => {
-  userCount--;
-});
-// mailto function 
+
+// Lägger till en lyssnare för "DOMContentLoaded" händelsen på dokumentet. När allt innehåll har laddats klart, så körs funktionen
 document.addEventListener("DOMContentLoaded", function () {
+  // Hämtar element för knappen och inputfälten för email-ämne och email-innehåll
+
   const sendEmailButton = document.getElementById('send-email');
   const subjectInput = document.getElementById('email-subject');
   const bodyInput = document.getElementById('email-body');
+  // Lägger till en lyssnare för klick på knappen
 
   sendEmailButton.addEventListener('click', (event) => {
+    // Förhindrar att sidan laddar om
     event.preventDefault();
-
+    // Kodar om värdet i inputfältet för ämne och innehåll till en kompatibel format för en mailto-länk
     const subject = encodeURIComponent(subjectInput.value);
     const body = encodeURIComponent(bodyInput.value);
+    // Skapar en mailto-länk med mottagarens email, ämne och innehåll
+
     const emailUrl = `mailto: h21nikcl@du.se?subject=${subject}&body=${body}`;
 
     window.location.href = emailUrl;
   });
 });
-// posts counter
-
-
-
+// räknare för inlägg
 function postcount(count) {
+  // Funktionen postcount tar emot en parameter, count, som innehåller antalet inlägg som ska visas.
+  // Letar upp den befintliga räknaren för inlägg
   const existingcount = document.querySelector(".count");
+  // Kontrollerar om det finns en befintlig räknare och tar bort den om det finns en
   if (existingcount) {
     existingcount.parentNode.removeChild(existingcount);
   }
 
-  postCounter = document.getElementById("post-counter");
+  // Hämtar elementet för räknaren av inlägg
+  const postCounter = document.getElementById("post-counter");
+  // Lägger till den nya räknaren för inlägg genom att anropa funktionen generateCount och skicka med count-parametern
   postCounter.insertAdjacentHTML("beforeend", generateCount(count))
 }
+// Funktionen generateCount tar emot en parameter, count, och returnerar en sträng med en div-tagg som innehåller antalet inlägg
 function generateCount(count) {
   let html = `
 
   <section>
-
 <div class="count">${count}</div>
- 
 </section>`
   return html
 }
-document.addEventListener("DOMContentLoaded", function () {
-  // your script code here
-  // Get the buttons
-  var likeBtn = document.getElementById("likeBtn");
-  var dislikeBtn = document.getElementById("dislikeBtn");
-
-  // Add event listener to like button
-  likeBtn.addEventListener("click", function () {
-    // code to handle a like
-    console.log("like button clicked");
-  });
-
-  // Add event listener to dislike button
-  dislikeBtn.addEventListener("click", function () {
-    // code to handle a dislike
-    console.log("dislike button clicked");
-  });
-});
